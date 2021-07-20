@@ -7,7 +7,9 @@
     margin-left: -4px;
 
   }
-
+  .container-2{
+    margin-top: 60px;
+  }
   .carousel-indicators .active {
     background-color: blue;
   }
@@ -37,22 +39,15 @@
     bottom: auto;
     padding-top: 200px;
   }
-
   body .no-padding {
     padding-left: 0;
     padding-right: 0;
   }
-
   .Button {
     border-radius: 10px;
   }
-
-
   .card {
-
     background-color: white;
-
-
     border-radius: 5px;
     width: 25%;
     box-shadow:
@@ -69,10 +64,10 @@
 {% load static %}
 {% block body %}
 
-<div class="container my-5 ">
+<div class="container  container-2 ">
   <!--Slideshow starts here -->
   {% for product ,range, n_slide in all_products %}
-  <h5 class="my-2">Flash Sale On {{product.0.product_catogory}} Recommended For You</h5>
+  <h5 class="">Flash Sale On {{product.0.product_catogory}} Recommended For You</h5>
   <div class="row">
 
 
