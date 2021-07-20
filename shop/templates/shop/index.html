@@ -7,9 +7,11 @@
     margin-left: -4px;
 
   }
-  .container-2{
+
+  .container-2 {
     margin-top: 60px;
   }
+
   .carousel-indicators .active {
     background-color: blue;
   }
@@ -19,12 +21,16 @@
     height: 170px;
   }
 
+  body {
+    background-color: rgb(201, 221, 221);
+  }
+
   body .carousel-indicator li {
     background-color: blue;
   }
 
   body .carousel-indicators {
-    bottom: 0;
+    bottom: -40px;
   }
 
   body .carousel-control-prev-icon,
@@ -39,13 +45,16 @@
     bottom: auto;
     padding-top: 200px;
   }
+
   body .no-padding {
     padding-left: 0;
     padding-right: 0;
   }
+
   .Button {
     border-radius: 10px;
   }
+
   .card {
     background-color: white;
     border-radius: 5px;
@@ -86,12 +95,14 @@
 
 
           {% for i in product %}
-          <div class="col-xs-3 col-sm-3 col-md-3 mx-4 my-2 fixed " id="card"  class="card" >
+          <div class="col-xs-3 col-sm-3 col-md-3 mx-4 my-2 fixed " id="card" class="card">
             <div class="card align-items-center" style="width: 18rem;">
               <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
               <div class="card-body">
                 <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                <p class="card-text">Price &#x20b9 {{i.product_price}}</p>
+                <b>
+                  <p class="card-title">Price &#x20b9 <span id="pricepr{{i.id}}">{{i.product_price}}</span></p>
+                </b>
                 <p class="card-text">{{i.description}}</p>
                 <span id="divpr{{i.id}}" class="divpr">
                   <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
@@ -148,7 +159,8 @@
     } else {
       qty = 1;
       name = document.getElementById('name' + idstr).innerHTML;
-      cart[idstr] = [qty, name];
+      price = document.getElementById('price' + idstr).innerHTML;
+      cart[idstr] = [qty, name, parseInt(price)];
     }
     updateCart(cart);
 
@@ -202,7 +214,14 @@
     a = this.id.slice(7,);
     cart['pr' + a][0] = cart['pr' + a][0] - 1;
     cart['pr' + a][0] = Math.max(0, cart['pr' + a][0]);
-    document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+
+    if (cart['pr' + a][0] == 0) {
+      document.getElementById('divpr' + a).innerHTML = '<button id="pr' + a + '" class ="btn btn-primary cart"> Add to cart</button>'
+      delete cart['pr' + a];
+    }
+    else {
+      document.getElementById('valpr' + a).innerHTML = cart['pr' + a][0];
+    }
     updateCart(cart);
   });
   $('.divpr').on("click", "button.plus", function () {

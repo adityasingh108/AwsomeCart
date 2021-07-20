@@ -1,20 +1,8 @@
 {% extends 'shop/basic.html' %}
 {% block title %}Contact Us {% endblock %}
-{% block css %}
-<style>
-
-
-  .container {
-    margin-top: 60px;
-  }
-</style>
-
-{% endblock %}
-
-
 {% block body%}
 
-<div class="container">
+<div class="container" style="margin-top: 60px;">
   <main>
 
     <div>
@@ -39,7 +27,8 @@
 
           <div class="col-sm-6">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="firstName" placeholder="13456@mail" value=""  name="email" required>
+            <input type="email" class="form-control" id="firstName" placeholder="13456@mail" value="" name="email"
+              required>
             <div class="invalid-feedback">
               Email is Required.
             </div>
@@ -53,7 +42,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-          <button class=" btn btn-primary btn-success my-4" type="submit">Submit</button>
+            <button class=" btn btn-primary btn-success my-4" type="submit">Submit</button>
           </div>
       </form>
 
@@ -89,9 +78,9 @@
       })
   })()
 
-{% if thank %}
-alert("Thanks for Improving us!");
-document.location='/shop';
-{% endif %}
+  {% if thank %}
+  alert("Thanks for Improving us!");
+  document.location = '/shop';
+  {% endif %}
 </script>
 {% endblock %}

@@ -2,12 +2,13 @@
 {% block title %}{{product.product_name}} My Awsome Cart{% endblock %}
 {% block css %}
 <style>
-  #chekout {
-    background-color: rgb(231, 205, 205);
-    border-radius: 10px;
+  body{
+    background-color: rgb(201, 221, 221);
   }
   .container-row{
-    margin-top:60px;
+    margin-top:52px;
+    margin-left:auto;
+    margin-right: auto;
   }
 
   .img {
@@ -47,6 +48,9 @@
 
 
 {% block body%}
+<body>
+  
+
 <div class="container">
   <div class="row container-row">
     <div class=" my-3  card">
@@ -54,7 +58,7 @@
         <img src="/media/{{product.product_image}}" class="img">
       
       <div>
-        <a href='/shop/checkout'><button class=' btn btn-primary btn-2' id='checkout'>Buy now</button></a>
+        <a href='/shop/checkout'><button class=' btn btn-primary btn-2 mx-2' id='checkout'>Buy now</button></a>
 
         <a href=""><button id="pr{{i.id}}" class="btn btn-primary my-2 cart btn-2">Add To Cart</button></a>
       </div>
@@ -66,5 +70,6 @@
       <p>{{product.description}}</p>
     </div>
   </div>
+</body>
 
   {% endblock %}

@@ -2,6 +2,9 @@
 {% block title %} Check out page {% endblock %}
 {% block css %}
 <style>
+  body{
+    background-color: rgb(201, 221, 221);
+  }
   .bd-placeholder-img {
     font-size: 1.125rem;
     text-anchor: middle;
@@ -9,11 +12,26 @@
     -moz-user-select: none;
     user-select: none;
   }
-  .container-2{
+
+  .container-2 {
     margin-top: 60px;
   }
-  #shopnow{
+
+  #shopnow {
     text-decoration: none;
+  }
+  .box-shadow1{
+    background-color: white;
+    border-radius: 5px;
+    width: auto;
+    box-shadow:
+      0 2.1px 2.7px rgba(0, 0, 0, 0.022),
+      0 5.3px 6.9px rgba(0, 0, 0, 0.031),
+      0 10.8px 14.2px rgba(0, 0, 0, 0.039),
+      0 22.3px 29.2px rgba(0, 0, 0, 0.048),
+      0 61px 80px rgba(0, 0, 0, 0.07);
+    box-sizing: content-box;
+    box-sizing: border-box;
   }
 </style>
 
@@ -22,7 +40,7 @@
 
 {% block body%}
 
-<body class="bg-light">
+<body >
 
   <div class="container container-2">
     <main>
@@ -33,13 +51,15 @@
             <p class="text-primary my-2">Item in your cart </p>
           </h4>
           <div>
-            <ul class="list-group mb-3" id="items">
+            <ul class="list-group mb-3 box-shadow1" id="items">
 
             </ul>
+
 
           </div>
 
         </div>
+
         <div class="col-md-7 col-lg-8">
           <h4 class="mb-3 text-primary my-2">Billing address</h4>
           <form class="needs-validation" novalidate action="/shop/checkout/" method="POST"> {% csrf_token %}
@@ -170,6 +190,7 @@
         })
     })()
     sum = 0;
+    var totalPrice = 0;
     if ($.isEmptyObject(cart)) {
       mystr = `<li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
@@ -180,29 +201,36 @@
       $('#items').append(mystr);
     }
     else {
-      my_cart  = `<a href='/shop'><button class='btn btn-primary my -2 '>Add more item</button></a>`
+      my_cart = `<a href='/shop'><button class='btn btn-primary mb-1 mt-2 mx-2'>Add more item</button></a>`
       for (item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
+        let itemPrice = cart[item][2];
         sum = sum + qty;
+        totalPrice = totalPrice + qty * itemPrice;
         mystr = `<li class="list-group-item d-flex justify-content-between lh-sm">
               <div>
                 <h6 class="my-0">${name}</h6>
 
               </div>
-              <span class=" badge badge-primary "><strong>${qty}</strong></span> 
+              <span class=" badge badge-primary ">${qty} X &#x20b9 ${itemPrice} </span> 
               
               </li>`
         $('#items').append(mystr);
       }
-      $('#items').append(my_cart)
+      my_totalPrice = `<li class="list-group-item d-flex justify-content-between">
+        <span>Total Price </span>
+        <strong>&#x20b9 ${totalPrice}</strong>
+        </li> `
+        $('#items').append(my_totalPrice)
+        $('#items').append(my_cart)
     }
 
     document.getElementById('cart').innerHTML = sum;
     $('#item_json').val(JSON.stringify(cart));
     {% if thank %}
     alert("Thank for ordering us Your order id is {{id}}");
-    document.location='/shop';
+    document.location = '/shop';
     localStorage.clear()
     {% endif %}
   </script>

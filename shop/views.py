@@ -58,13 +58,9 @@ def tracker(request):
                 response = json.dumps([updates, order[0].item_json], default=str)
                 return HttpResponse(response)
             else:
-                return HttpResponse('''<p  class=" text-primary">
-                        make sure your id and emai is correct.
-                    </p>''')
+                return HttpResponse('make sure your id and emai is correct')
         except Exception as e:
-            return HttpResponse('''<p  class=" text-primary">
-                        order id and email is can't blank.
-                    </p>''')
+            return HttpResponse("order id and email is can't blank.")
 
     return render(request, 'shop/tracker.html')
 
