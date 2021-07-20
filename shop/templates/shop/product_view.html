@@ -1,0 +1,63 @@
+{% extends 'shop/basic.html' %}
+{% block title %}{{product.product_name}} My Awsome Cart{% endblock %}
+{% block css %}
+<style>
+  #chekout {
+    background-color: rgb(231, 205, 205);
+    border-radius: 10px;
+  }
+
+  .img {
+    align-items: center;
+    width: auto;
+  }
+  .btn-2{
+    align-items: center;
+    display: inline-flex;
+    width:auto;
+    box-sizing: border-box;
+    text-decoration: none;
+    height: auto;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+  }
+
+  .card {
+    background-color: white;
+    border-radius: 5px;
+    width: 25%;
+    box-shadow:
+      0 2.1px 2.7px rgba(0, 0, 0, 0.022),
+      0 5.3px 6.9px rgba(0, 0, 0, 0.031),
+      0 10.8px 14.2px rgba(0, 0, 0, 0.039),
+      0 22.3px 29.2px rgba(0, 0, 0, 0.048),
+      0 61px 80px rgba(0, 0, 0, 0.07);
+  }
+</style>
+
+{% endblock%}
+
+
+{% block body%}
+<div class="container my-5">
+  <div class="row">
+    <div class=" my-3  card">
+      
+        <img src="/media/{{product.product_image}}" class="img">
+      
+      <div>
+        <a href='/shop/checkout'><button class=' btn btn-primary btn-2' id='checkout'>Buy now</button></a>
+
+        <a href=""><button id="pr{{i.id}}" class="btn btn-primary my-2 cart btn-2">Add To Cart</button></a>
+      </div>
+      
+    </div>
+    <div class="col-md-8 mx-4">
+      <h5 class="my-4">{{product.product_name}}</h5>
+      <h5 class="card-text">Price &#x20b9 {{product.product_price}}</h5>
+      <p>{{product.description}}</p>
+    </div>
+  </div>
+
+  {% endblock %}

@@ -1,0 +1,97 @@
+{% extends 'shop/basic.html' %}
+{% block title %}Contact Us {% endblock %}
+{% block css %}
+<style>
+
+
+  .container {
+    max-width: 960px;
+  }
+</style>
+
+{% endblock %}
+
+
+{% block body%}
+
+<div class="container my-4">
+  <main>
+
+    <div>
+      <h4 class=" mb-3">Contact Us</h4>
+      <form class="needs-validation" novalidate action="/shop/contact/" method='post' id="form">{% csrf_token %}
+        <div class="row g-3">
+          <div class="col-sm-6">
+            <label for="firstName" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Name" value="" name="name" required>
+            <div class="invalid-feedback">
+              Name is Required.
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="Mobile number " class="form-label">Phone Number</label>
+            <input type="phone" class="form-control" id="phone" placeholder="234567890" value="" name="phone" required>
+            <div class="invalid-feedback">
+              Phone Number is Required.
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="firstName" placeholder="13456@mail" value=""  name="email" required>
+            <div class="invalid-feedback">
+              Email is Required.
+            </div>
+
+          </div>
+          <div class="col-sm-6">
+            <label for="description" class="form-label">How may i help you!</label>
+            <textarea name="desc" class="form-control" id="description" required></textarea>
+            <div class="invalid-feedback">
+              Description is Required.
+            </div>
+          </div>
+          <div class="col-sm-6">
+          <button class=" btn btn-primary btn-success my-4" type="submit">Submit</button>
+          </div>
+      </form>
+
+
+
+    </div>
+  </main>
+
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+
+{% if thank %}
+alert("Thanks for Improving us!");
+document.location='/shop';
+{% endif %}
+</script>
+{% endblock %}

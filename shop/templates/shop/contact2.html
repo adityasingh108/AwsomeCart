@@ -1,0 +1,79 @@
+{% extends 'shop/basic.html' %}
+{% block title %}About Us{% endblock %}
+{% block css %} 
+<style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+
+  .container {
+    max-width: 960px;
+  }
+</style>{% endblock%}
+{% block body%}
+<div class="container">
+    <form action="/shop/contact/" method='post' id="form"> {% csrf_token %}
+
+        <h4 class="my-2">Contact Me !</h4>
+
+        <div class="mb-3 form-group">
+            <label for="exampleFormControlInput3" class="form-label">Your Name</label>
+            <input type="name" class="form-control" id="name" id="exampleFormControlInput1" name='name' required
+                placeholder="Name">
+        </div>
+       
+
+        <div class="mb-3 form-group">
+            <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" id="exampleFormControlInput2" name='phone' required
+                placeholder="1234567890">
+        </div>
+
+        <div class="mb-3 form-group">
+            <label for="exampleFormControlInput2" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" id="exampleFormControlInput3" name="email"
+                placeholder="name@example.com" required>
+        </div>
+
+        <div class="mb-3 form-group">
+            <label for="exampleFormControlTextarea4" class="form-label">How May I Help You ?</label>
+            <textarea class="form-control" id="desc" id="exampleFormControlTextarea1" name="desc" rows="3"
+                required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Submit </button>
+
+    </form>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+</script>
+{% endblock %}
+
