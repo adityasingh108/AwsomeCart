@@ -3,7 +3,12 @@ from django.http import HttpResponse, response
 from .models import Contact, product, orders, orderUpdate
 from math import ceil, trunc
 import json
+from django.views.decorators.csrf import csrf_exempt
+from paytm import Checksum
 
+MERCHANT_KEY = 'kbzk1DSbJiV_03p5';
+
+# Create your views here.
 
 # Create your views here.
 
@@ -95,7 +100,7 @@ def checkout(request):
         city = request.POST.get('city', '')
         zip_code = request.POST.get('zip_code', '')
         order = orders(item_json=item_json, name=name, phone=phone, email=email,
-                       adress=adress, country=country, state=state, city=city, zip_code=zip_code ,amount=amount)
+                       adress=adress, country=country, state=state, city=city, zip_code=zip_code, amount=amount)
         order.save()
         update = orderUpdate(order_id=order.order_id,
                              update_desc="The order has been placed.")
@@ -103,4 +108,40 @@ def checkout(request):
         thank = True
         id = order.order_id
         return render(request, 'shop/checkout.html', {'thank': thank, 'id': id})
+        param_dict = {
+
+            'MID': 'WorldP64425807474247',
+            'ORDER_ID': str(order.order_id),
+            'TXN_AMOUNT': str(amount),
+            'CUST_ID': email,
+            'INDUSTRY_TYPE_ID': 'Retail',
+            'WEBSITE': 'WEBSTAGING',
+            'CHANNEL_ID': 'WEB',
+            'CALLBACK_URL': 'http://127.0.0.1:8000/shop/handlerequest/',
+
+        }
+        param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(
+            param_dict, MERCHANT_KEY)
+        return render(request, 'shop/paytm.html', {'param_dict': param_dict})
+
     return render(request, 'shop/checkout.html')
+
+
+@csrf_exempt
+def handlerequest(request):
+    # paytm will send you post request here
+    form = request.POST
+    response_dict = {}
+    for i in form.keys():
+        response_dict[i] = form[i]
+        if i == 'CHECKSUMHASH':
+            checksum = form[i]
+
+    verify = Checksum.verify_checksum(response_dict, MERCHANT_KEY, checksum)
+    if verify:
+        if response_dict['RESPCODE'] == '01':
+            print('order successful')
+        else:
+            print('order was not successful because' +
+                  response_dict['RESPMSG'])
+    return render(request, 'shop/paymentstatus.html', {'response': response_dict})
