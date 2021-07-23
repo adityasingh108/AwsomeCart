@@ -52,7 +52,7 @@
           </h4>
           <div>
             <ul class="list-group mb-3 box-shadow1" id="items">
-
+             
             </ul>
 
 
@@ -64,6 +64,7 @@
           <h4 class="mb-3 text-primary my-2">Billing address</h4>
           <form class="needs-validation" novalidate action="/shop/checkout/" method="POST"> {% csrf_token %}
             <input type="hidden" name="item_json" id="item_json">
+            <input type="hidden" name="amount" id="amount">
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="firstName" class="form-label text-primary">First name</label>
@@ -219,7 +220,7 @@
         $('#items').append(mystr);
       }
       my_totalPrice = `<li class="list-group-item d-flex justify-content-between">
-        <span>Total Price </span>
+        <span id='totalPrice' name="amount">Total Price </span>
         <strong>&#x20b9 ${totalPrice}</strong>
         </li> `
         $('#items').append(my_totalPrice)
@@ -233,5 +234,7 @@
     document.location = '/shop';
     localStorage.clear()
     {% endif %}
+    console.log(totalPrice)
+    $('#amount').val(totalPrice);
   </script>
   {% endblock %}

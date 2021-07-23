@@ -33,6 +33,7 @@ class Contact(models.Model):
 class orders(models.Model):
     order_id = models.AutoField(primary_key=True)
     item_json = models.CharField(max_length=500000)
+    amount = models.IntegerField(default=0)
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     email = models.CharField(max_length=100)

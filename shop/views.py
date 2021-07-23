@@ -50,12 +50,13 @@ def tracker(request):
         try:
             order = orders.objects.filter(order_id=order_id, email=email)
             if len(order) > 0:
-                update = orderUpdate.objects.filter(order_id=order_id )
+                update = orderUpdate.objects.filter(order_id=order_id)
                 updates = []
                 for item in update:
                     updates.append(
                         {'text': item.update_desc, 'time': item.timestamp})
-                response = json.dumps([updates, order[0].item_json], default=str)
+                response = json.dumps(
+                    [updates, order[0].item_json], default=str)
                 return HttpResponse(response)
             else:
                 return HttpResponse('make sure your id and emai is correct')
@@ -82,6 +83,7 @@ def checkout(request):
     if request.method == "POST":
 
         item_json = request.POST.get('item_json', '')
+        amount = request.POST.get('amount', '')
         name = request.POST.get('firist_name', '') + \
             " " + request.POST.get('last_name', '')
         phone = request.POST.get('phone', '')
@@ -93,7 +95,7 @@ def checkout(request):
         city = request.POST.get('city', '')
         zip_code = request.POST.get('zip_code', '')
         order = orders(item_json=item_json, name=name, phone=phone, email=email,
-                       adress=adress, country=country, state=state, city=city, zip_code=zip_code)
+                       adress=adress, country=country, state=state, city=city, zip_code=zip_code ,amount=amount)
         order.save()
         update = orderUpdate(order_id=order.order_id,
                              update_desc="The order has been placed.")

@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row ">
         <div class="col-md-8 blog-main">
-            <h3 class="pb-4 mb-4 font-italic border-bottom">{{post.title}}   </h3>
+            <h3 class="pb-4 mb-4 font-italic border-bottom">{{post.title}} </h3>
             <img src="/media/{{post.thumbnail}}" class="img">
             <div class="blog-post">
                 <h4 class="blog-post-title">{{post.head0}}</h4>
@@ -16,13 +16,22 @@
                 <h2>{{post.head2}}</h2>
                 <p>{{post.head2_content}}</p>
             </div>
+            <div class="fb-comments" data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="420"
+                data-numposts="5"></div> <br>
+
+
         </div>
         <aside class="col-md-4 blog-sidebar">
             <div class="p-4 mb-3 bg-light rounded">
                 <h4 class="font-italic">About</h4>
                 <p class="mb-0">My Awesome Cart is an <em>ecommerce website</em>. You can use it for buying and
                     searching items online. </p>
+                <div class="fb-like mb-0 " data-href="http://127.0.0.1:8000/blog/blogpost/{{post.post_id}}" data-width="420"
+                data-layout="box_count" data-action="like" data-size="small" data-share="true"></div>    
+
+
             </div>
+            
             <div class="p-4">
                 <h4 class="font-italic">Contact Us On: </h4>
                 <ol class="list-unstyled">
@@ -36,5 +45,5 @@
 </div>
 
 {% endblock%}
-{% block js %} 
+{% block js %}
 {% endblock%}
