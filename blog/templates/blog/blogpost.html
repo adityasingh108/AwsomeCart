@@ -5,19 +5,18 @@
 <div class="container">
     <div class="row ">
         <div class="col-md-8 blog-main">
-            <h3 class="pb-4 mb-4 font-italic border-bottom">
-                Title
-            </h3>
+            <h3 class="pb-4 mb-4 font-italic border-bottom">{{post.title}}   </h3>
+            <img src="/media/{{post.thumbnail}}" class="img">
             <div class="blog-post">
-                <h2 class="blog-post-title">Heading 0</h2>
-                <p class="blog-post-meta">January 1, 2014 by <a href="#">CodeWithHarry</a></p>
-                <p>Heading 0 content</p>
-                <h2>Heading1</h2>
-                <p> Heading 1 content</p>
-                <h2>Heading2</h2>
-                <p>Heading 2 content</p>
-            </div><!-- /.blog-post -->
-        </div><!-- /.blog-main -->
+                <h4 class="blog-post-title">{{post.head0}}</h4>
+                <p class="blog-post-meta">{{post.publish_date}}<a href="#"> Aditya</a></p>
+                <p>{{post.head0_content}}</p>
+                <h4>{{post.head1}}</h4>
+                <p> {{post.head1_content}}</p>
+                <h2>{{post.head2}}</h2>
+                <p>{{post.head2_content}}</p>
+            </div>
+        </div>
         <aside class="col-md-4 blog-sidebar">
             <div class="p-4 mb-3 bg-light rounded">
                 <h4 class="font-italic">About</h4>
@@ -37,4 +36,5 @@
 </div>
 
 {% endblock%}
-{% block js %} {% endblock%}
+{% block js %} 
+{% endblock%}
