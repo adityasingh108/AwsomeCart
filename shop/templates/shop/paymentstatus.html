@@ -1,5 +1,5 @@
 {% extends 'shop/basic.html' %}
-{% block title%} My Awesome Cart Tracker{% endblock %}
+{% block title%}Payment Status{% endblock %}
 {% block body %}
 <div class="container">
     {{response}}
@@ -7,9 +7,9 @@
 
         <h2>Payment status regarding your order Id {{response.ORDERID}}</h2>
         {% if response.RESPCODE == '01' %}
-        ORDER SUCCESS
+        <h3>ORDER SUCCESS</h3>
         {% else %}
-        ORDER FAILURE
+       <h3>Order is falure</h3>
         {% endif%}
 
     </div>

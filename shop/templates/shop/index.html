@@ -46,6 +46,11 @@
     padding-top: 200px;
   }
 
+  .mr-4,
+  .mx-4 {
+    margin-right: 2.5rem ;
+  }
+
   body .no-padding {
     padding-left: 0;
     padding-right: 0;
@@ -158,7 +163,7 @@
       qty = cart[idstr][0] + 1;
     } else {
       qty = 1;
-      name = document.getElementById('name' + idstr).innerHTML;
+      name = document.getElementById('cart' + idstr).innerHTML;
       price = document.getElementById('price' + idstr).innerHTML;
       cart[idstr] = [qty, name, parseInt(price)];
     }

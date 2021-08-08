@@ -1,12 +1,16 @@
+from django import http
+from django.core.checks import messages
+from django.db.models import query
 from django.shortcuts import render
+from django.contrib.auth.models import User
 from django.http import HttpResponse, response
-from .models import Contact, product, orders, orderUpdate
+from .models import Contact, product, orders, orderUpdate,accaunt
 from math import ceil, trunc
 import json
 from django.views.decorators.csrf import csrf_exempt
 from paytm import Checksum
 
-MERCHANT_KEY = 'kbzk1DSbJiV_03p5';
+MERCHANT_KEY = 'kbzk1DSbJiV_03p5'
 
 # Create your views here.
 
@@ -26,7 +30,72 @@ def index(request):
     return render(request, "shop/index.html", param)
 
 
+def SerchMatch(query, item):
+    if query in item.product_name.lower() or query in item.product_catogory.lower() or query in item.description.lower() or query in item.product_sub_catogory.lower() or query in item.product_brand.lower():
+        return True
+    else:
+        return False
+
+
+def serch(request):
+    query = request.GET.get('serch')
+    all_products = []
+    category_prod = product.objects.values('product_catogory')
+    categories = {item['product_catogory']for item in category_prod}
+    for cat in categories:
+        products = product.objects.filter(product_catogory=cat)
+        prod = [item for item in products if SerchMatch(query, item)]
+        n = len(prod)
+        n_slides = n//4 + ceil((n/4) - (n//4))
+        if len(prod) != 0:
+            all_products.append([products, range(1, n_slides), n_slides])
+    param = {'all_products': all_products, 'msg': ''}
+    if len(all_products) == 0 or len(query) < 2:
+        param = {'msg': 'Please make sure to enter relevant Query.'}
+    return render(request, "shop/serch.html", param)
+
 # This is about page
+
+def login(request):
+    return render(request,'shop/index.html')
+
+
+
+def signup(request):
+    # if request.method == "POST":
+    #     username = request.POST.get('username',"")
+    #     name = request.POST.get('fname',"") + " " + request.POST.get('lname',"")
+    #     email =  request.POST.get('email',"")
+    #     password =  request.POST.get('pass1',"") + " " +  request.POST.get('pass2',"")
+    #     signup = accaunt(username=username,name=name,password=password,email=email)
+    #     signup.save()
+    # else:
+    #     return HttpResponse("Page not found ")    
+    # return render(request,'shop/signup.html')
+    
+    if request.method == "POST":
+        username = request.POST['username']
+        fname = request.POST['fname']
+        lname = request.POST['lname']
+        email = request.POST['email']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+        
+        
+        # creating the user 
+        
+        myuser = User.objects.create_user(username,email,pass1)
+        myuser.firist_name = fname
+        myuser.last_name = lname
+        myuser.save()
+        messages.success(request,"your accaunt has been created You good to go.")
+        
+        
+        
+        return render(request,'shop/signup.html')
+    else:
+        return HttpResponse("error  while parsing your crendentials")
+
 def about(request):
     return render(request, "shop/about.html")
 
@@ -71,10 +140,6 @@ def tracker(request):
     return render(request, 'shop/tracker.html')
 
 # serch page
-
-
-def serch(request):
-    return render(request, 'shop/serch.html')
 
 
 # product view page

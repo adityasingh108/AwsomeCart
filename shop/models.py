@@ -55,3 +55,16 @@ class orderUpdate(models.Model):
     
     def __str__(self):
         return  f"{self.order_id}   {self.update_desc[0:20]}"
+    
+    
+class accaunt(models.Model):
+    username = models.CharField(max_length=100)
+    name = models.CharField(max_length=500000)
+    email = models.CharField(max_length=100)
+    password = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return self.username
+    
+    
+        

@@ -49,6 +49,7 @@ $('#trackerForm').submit(function(event) {
         })
         .done(function(data) {
             console.log(data)
+            $('#citems').empty();
             data = JSON.parse(data);
             updates = data[0];
             if (updates.length > 0 & updates != {}) {

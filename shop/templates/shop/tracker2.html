@@ -18,7 +18,8 @@
     #shopnow {
         text-decoration: none;
     }
-    #order_status{
+
+    #order_status {
         margin-left: 10px;
     }
 </style>
@@ -28,50 +29,50 @@
 
 <body class="bg-light">
     <div class="container my-5">
-            <div class="row g-5">
-                <div class="col-md-7 col-lg-8">
-                    <h4 class="mb-3 text-primary my-2">Tracking status</h4>
-                    <form class="needs-validation" novalidate method="POST" id="trackerForm"> {% csrf_token %}
-                        <div class="row g-3">
-                            <div class="col-sm-6">
-                                <label for="product_id" class="form-label text-primary">Product Id</label>
-                                <input type="text" class="form-control" id="order_id" name="order_id"
-                                    placeholder="Product Id" value="" required>
-                                <div class="invalid-feedback">
-                                    Product id is required.
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="email" class="form-label text-primary">Email</label>
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="you@example.com" required>
-                                <div class="invalid-feedback">
-                                    Please enter a valid email address for shipping updates.
-                                </div>
-                            </div>
-                            <div>
-                                <button class=" mx-3 my-2 btn btn-primary btn-success btn-lg" type="submit">Track
-                                    order</button>
+        <div class="row g-5">
+            <div class="col-md-7 col-lg-8">
+                <h4 class="mb-3 text-primary my-2">Tracking status</h4>
+                <form class="needs-validation" novalidate method="POST" id="trackerForm"> {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="product_id" class="form-label text-primary">Product Id</label>
+                            <input type="text" class="form-control" id="order_id" name="order_id"
+                                placeholder="Product Id" value="" required>
+                            <div class="invalid-feedback">
+                                Product id is required.
                             </div>
                         </div>
-                    </form>
-                </div>
+                        <div class="col-sm-6">
+                            <label for="email" class="form-label text-primary">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="you@example.com" required>
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+                        <div>
+                            <button class=" mx-3 my-2 btn btn-primary btn-success btn-lg" type="submit">Track
+                                order</button>
+                        </div>
+                    </div>
+                </form>
             </div>
+        </div>
         <div class="col my-2 col-md-7 col-lg-8 " id="order_status">
             <h4 class="mb-3 text-primary ">Your Order Status</h4>
             <div class="my-4">
                 <ul class="list-group" id="items">
-                    <p  class=" text-primary">
+                    <p class=" text-primary">
                         Enter your order Id and Email and click Track Order to find details about your
-                    order!
+                        order!
                     </p>
                 </ul>
             </div>
             <h2>Your Order Details </h2>
-        <div class="my-4">
-            <ul class="list-group" id="citems">
-            </ul>
-        </div>
+            <div class="my-4">
+                <ul class="list-group" id="citems">
+                </ul>
+            </div>
         </div>
     </div>
     {% endblock %}
@@ -112,6 +113,7 @@
             })
                 .done(function (data) {
                     console.log(data)
+                    $('#citems').empty();
                     data = JSON.parse(data);
                     updates = data[0];
                     if (updates.length > 0 & updates != {}) {
@@ -119,28 +121,28 @@
                             let text = updates[i]['text'];
                             let time = updates[i]['time'];
                             mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                           ${text}<span class="badge badge-primary badge-pill">${time}</span>
-                                     </li>`
+                    ${text}
+                    <span class="badge badge-primary badge-pill">${time}</span>
+                </li>`
                             $('#items').append(mystr);
                         }
-                        
                     } else {
                         mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email
-                                </li>`
+                    Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email</li>`
                         $('#items').append(mystr);
                     }
                     // Fill in the order details
                     cart = JSON.parse(data[1]);
-                        console.log(cart);
-                        for (item in cart) {
-                            let name = cart[item][1];
-                            let qty = cart[item][0];
-                            mystr = `<li class="list-group-item d-flex justify-content-betweexn align-items-center">
-                                        ${name}<span class="badge badge-primary badge-pill">${qty}</span>
-                                     </li>`
-                            $('#citems').append(mystr);
-                        }
+                    console.log(cart);
+                    for (item in cart) {
+                        let name = cart[item][1];
+                        let qty = cart[item][0];
+                        mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
+                    ${name}
+                    <span class="badge badge-primary badge-pill">${qty}</span>
+                </li>`
+                        $('#citems').append(mystr);
+                    }
                 });
             event.preventDefault();
         });

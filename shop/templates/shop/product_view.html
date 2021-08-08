@@ -57,19 +57,21 @@
       
         <img src="/media/{{product.product_image}}" class="img">
       
-      <div>
-        <a href='/shop/checkout'><button class=' btn btn-primary btn-2 mx-2' id='checkout'>Buy now</button></a>
-
-        <a href=""><button id="pr{{i.id}}" class="btn btn-primary my-2 cart btn-2">Add To Cart</button></a>
-      </div>
+    
       
     </div>
-    <div class="col-md-8 mx-4">
+    <div class="col-md-8 ">
       <h5 class="my-4">{{product.product_name}}</h5>
       <h5 class="card-text">Price &#x20b9 {{product.product_price}}</h5>
       <p>{{product.description}}</p>
     </div>
+    <div >
+      <a href='/shop/checkout'><button class=' btn btn-primary btn-2 mx-2' id='checkout'>Buy now</button></a>
+
+      <span id="divpr{{i.id}}" class="divpr">
+        <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+      </span>
+    </div>
   </div>
 </body>
-
-  {% endblock %}
+{% endblock %}

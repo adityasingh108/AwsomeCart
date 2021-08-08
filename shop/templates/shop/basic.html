@@ -13,23 +13,23 @@
   <title>{% block title %} {% endblock %}</title>
 
 
-  {% block css %} 
+  {% block css %}
   <style>
-    #navbar{
+    #navbar {
       top: auto;
-      
+
     }
-    body{
+
+    body {
       background-color: rgb(201, 221, 221);
     }
   </style>
   {% endblock %}
 </head>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark mr-sm-2  id="navbar">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark mr-sm-2  id=" navbar">
   <a class="navbar-brand" href="/shop/">My Awesome Cart</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" <span
-    class="navbar-toggler-icon"></span>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -51,108 +51,34 @@
         <a class="nav-link" href="/shop/contact/">Contact Us</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+
+
+    <form method="GET" action="/shop/serch" class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="serch"
+        name="serch">
       <a href="/shop/serch/"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></a>
     </form>
 
-    <button type="button" class="btn btn-secondary mx-2" id="popcart" data-container="body" data-toggle="popover"
+
+    <button type="button" class="btn btn-outline-success ml-1 " id="popcart" data-container="body" data-toggle="popover"
       data-placement="bottom" data-html="true" data-content="Cart is Empty">
       Cart(<span id="cart">0</span>)
     </button>
+    <!-- Button trigger Sigin Here -->
+    <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#loginModal">
+      Login
+    </button>
+
+    <button type="button" class="btn btn-outline-success  " data-toggle="modal" data-target="#signupModal">
+      SignUp
+    </button>
+
   </div>
 </nav>
 
 <body>
+
   {% block body %} {% endblock %}
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    crossorigin="anonymous"></script>
-
-
-  <script
-  src="https://code.jquery.com/jquery-3.6.0.js"
-  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-    integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-    integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
-    crossorigin="anonymous"></script>
-
-    <script>
-      
-  if (localStorage.getItem('cart') == null) {
-    var cart = {};
-  } else {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    updateCart(cart);
-  }
-  //of the cart is empty then add The itemm in the cart
-  // $('.cart').click(function() {
-  $('.divpr').on('click', 'button.cart', function () {
-    var idstr = this.id.toString();
-    if (cart[idstr] != undefined) {
-      qty = cart[idstr][0] + 1;
-    } else {
-      qty = 1;
-      name = document.getElementById('name' + idstr).innerHTML;
-      price = document.getElementById('price' + idstr).innerHTML;
-      cart[idstr] = [qty, name, parseInt(price)];
-    }
-    updateCart(cart);
-
-  });
-  //add popover 
-  //Add Popover to cart
-  // $('#popcart').popover();
-  updatePopover(cart);
-  function updatePopover(cart) {
-    console.log('We are inside updatePopover');
-    var popStr = "";
-    popStr = popStr + "<h6>Item in cart</h6><div class='mx-2 my-2'>";
-    var i = 1;
-    for (var item in cart) {
-      popStr = popStr + "<b>" + i + "</b>. ";
-      popStr = popStr
-      i = i + 1;
-    }
-    popStr = popStr + "</div> <a href= '/shop/checkout'><button class='btn btn-primary' id = 'checkout' > Checkout</button></a><button class='btn btn-primary mx-2' id = 'clearcart' onclick ='clearcart()' > ClearCart</button>";
-    console.log(popStr);
-    document.getElementById('popcart').setAttribute('data-content', popStr);
-    // $('#popcart').popover();
-  }
-  function clearcart() {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    for (var item in cart) {
-
-
-    }
-    localStorage.clear();
-    cart = {};
-    updateCart(cart);
-  }
-
-
-
-  function updateCart(cart) {
-    var sum = 0;
-    for (var item in cart) {
-      sum = sum + cart[item][0];
-      localStorage.setItem('cart', JSON.stringify(cart));
-      document.getElementById('cart').innerHTML = sum;
-      console.log(cart);
-      updatePopover(cart);
-    }
-  };
-
-    </script>
-  {% block js %} {% endblock %}
-
-
 
   <footer class="my-5 pt-5 text-muted text-center text-small">
     <p class="mb-1">&copy; 2021 Aditya Solution</p>
@@ -162,6 +88,186 @@
       <li class="list-inline-item"><a>Support</a></li>
     </ul>
   </footer>
-</body>
 
-</html>
+
+
+
+
+  <!-- sign up model -->
+  <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="signupModalTitle">SignUp Here</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/shop/signup/" method='POST'>{% csrf_token %}
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username"
+                placeholder="Choose a unique username" required>
+            </div>
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" class="form-control" id="fname" name="fname" placeholder="Enter Your First Name"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="pass1">Choose a password</label>
+              <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Choose Your Password"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="pass2">Confirm Password</label>
+              <input type="password" class="form-control" id="pass2" name="pass2"
+                placeholder="Enter your password again" required>
+            </div>
+
+
+
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalTitle">Login Here</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/shop/login/" method="POST">{% csrf_token %}
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="loginusername" name="loginusername"
+                placeholder="Choose a unique username" required>
+            </div>
+            <div class="form-group">
+              <label for="pass">Enter your password </label>
+              <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter your password "
+                required>
+            </div>
+
+            <button type="submit" class="btn btn-outline-success">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+
+
+
+
+
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+          crossorigin="anonymous"></script>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.js"
+          integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+          integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+          crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+          integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+          crossorigin="anonymous"></script>
+
+        <script>
+
+          if (localStorage.getItem('cart') == null) {
+            var cart = {};
+          } else {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            updateCart(cart);
+          }
+          //of the cart is empty then add The itemm in the cart
+          // $('.cart').click(function() {
+          $('.divpr').on('click', 'button.cart', function () {
+            var idstr = this.id.toString();
+            if (cart[idstr] != undefined) {
+              qty = cart[idstr][0] + 1;
+            } else {
+              qty = 1;
+              name = document.getElementById('name' + idstr).innerHTML;
+              price = document.getElementById('price' + idstr).innerHTML;
+              cart[idstr] = [qty, name, parseInt(price)];
+            }
+            updateCart(cart);
+
+          });
+          //add popover 
+          //Add Popover to cart
+          // $('#popcart').popover();
+          updatePopover(cart);
+          function updatePopover(cart) {
+            console.log('We are inside updatePopover');
+            var popStr = "";
+            popStr = popStr + "<h6>Item in cart</h6><div class='mx-2 my-2'>";
+            var i = 1;
+            for (var item in cart) {
+              popStr = popStr + "<b>" + i + "</b>. ";
+              popStr = popStr
+              i = i + 1;
+            }
+            popStr = popStr + "</div> <a href= '/shop/checkout'><button class='btn btn-primary' id = 'checkout' > Checkout</button></a><button class='btn btn-primary mx-2' id = 'clearcart' onclick ='clearcart()' > ClearCart</button>";
+            console.log(popStr);
+            document.getElementById('popcart').setAttribute('data-content', popStr);
+            // $('#popcart').popover();
+          }
+          function clearcart() {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            for (var item in cart) {
+
+
+            }
+            localStorage.clear();
+            cart = {};
+            updateCart(cart);
+          }
+
+
+
+          function updateCart(cart) {
+            var sum = 0;
+            for (var item in cart) {
+              sum = sum + cart[item][0];
+              localStorage.setItem('cart', JSON.stringify(cart));
+              document.getElementById('cart').innerHTML = sum;
+              console.log(cart);
+              updatePopover(cart);
+            }
+          };
+
+        </script>
+        {% block js %} {% endblock %}
