@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
   <title>{% block title %} {% endblock %}</title>
 
 
@@ -26,9 +27,10 @@
   </style>
   {% endblock %}
 </head>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark mr-sm-2  id=" navbar">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark   id=" navbar" style="border-radius: 9px;">
   <a class="navbar-brand" href="/shop/">My Awesome Cart</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -38,16 +40,16 @@
         <a class="nav-link" href="/shop">Home <span class="sr-only">(current)</span></a>
 
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/shop/tracker/">Tracker</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item active">
         <a class="nav-link" href="/shop/about/">About Us</a>
       </li>
-      <li class="nav-items">
+      <li class="nav-items active">
         <a class="nav-link" href="/blog">Blog</a>
       </li>
-      <li class="nav-items">
+      <li class="nav-items active">
         <a class="nav-link" href="/shop/contact/">Contact Us</a>
       </li>
     </ul>
@@ -55,7 +57,7 @@
 
     <form method="GET" action="/shop/serch" class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="serch"
-        name="serch">
+        style="background-color:rgb(52 58 64);;" name="serch">
       <a href="/shop/serch/"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></a>
     </form>
 
@@ -65,16 +67,37 @@
       Cart(<span id="cart">0</span>)
     </button>
     <!-- Button trigger Sigin Here -->
-    <button type="button" class="btn btn-outline-success mx-1" data-toggle="modal" data-target="#loginModal">
-      Login
-    </button>
+    {% if user.is_authenticated %}
+    <ul class="navbar-nav mr-2">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle btn-outline-success" href='#' id="navbarDropdown" role="button"
+          data-toggle="dropdown"> Welcome {{request.user.first_name}}</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item btn-outline-success" href="/shop/logout">Logout</a>
 
-    <button type="button" class="btn btn-outline-success  " data-toggle="modal" data-target="#signupModal">
-      SignUp
-    </button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  {% else %}
+  <!-- Button to  trigger Login modal -->
+  <button type="button" class="btn btn-outline-success mr-2" data-toggle="modal" data-target="#loginModal">
+    Login
+  </button>
 
+  <button type="button" class="btn btn-outline-success mr-2" data-toggle="modal" data-target="#signupModal">
+    SignUp
+  </button>
+  {% endif %}
   </div>
 </nav>
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  <strong>Message : </strong> {{ message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+</div>
+{% endfor %}
 
 <body>
 
@@ -104,7 +127,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form action="/shop/signup/" method='POST'>{% csrf_token %}
+          <form action="/shop/signup/" method='POST'> {% csrf_token %}
             <div class="form-group">
               <label for="username">Username</label>
               <input type="text" class="form-control" id="username" name="username"
@@ -122,17 +145,20 @@
             </div>
             <div class="form-group">
               <label for="email">Email address</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+              <input type="email" class="form-control" id="signupemail" name="signupemail"
+                placeholder="name@example.com" required>
             </div>
             <div class="form-group">
               <label for="pass1">Choose a password</label>
               <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Choose Your Password"
-                required>
+                required> <br>Show password
+              <i class="far fa-eye" style="cursor: pointer;" id="togglePass1" onclick="myFunction()"></i>
             </div>
             <div class="form-group">
               <label for="pass2">Confirm Password</label>
               <input type="password" class="form-control" id="pass2" name="pass2"
-                placeholder="Enter your password again" required>
+                placeholder="Enter your password again" required> <br>Show password
+              <i class="far fa-eye" style="cursor: pointer;" id="togglepass2" onclick="myfunction()"></i>
             </div>
 
 
@@ -172,9 +198,12 @@
             </div>
             <div class="form-group">
               <label for="pass">Enter your password </label>
-              <input type="password" class="form-control" id="pass" name="pass" placeholder="Enter your password "
-                required>
+              <input type="password" class="form-control" id="loginpassword" name="loginpassword"
+                placeholder="Enter your password " required> <br>Show password
+              <i class="far fa-eye " style="cursor: pointer;" id="togglePassword"></i>
+
             </div>
+            <!-- <input type="checkbox" class="form-control" onclick="myFunction()"> -->
 
             <button type="submit" class="btn btn-outline-success">Submit</button>
           </form>
@@ -204,7 +233,33 @@
           crossorigin="anonymous"></script>
 
         <script>
+          const togglePassword = document.querySelector('#togglePassword');
+          const password = document.querySelector('#loginpassword');
 
+          togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+          });
+
+          function myFunction() {
+            var x = document.getElementById("pass1");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
+          function myfunction() {
+            var x = document.getElementById("pass2");
+            if (x.type === "password") {
+              x.type = "text";
+            } else {
+              x.type = "password";
+            }
+          }
           if (localStorage.getItem('cart') == null) {
             var cart = {};
           } else {

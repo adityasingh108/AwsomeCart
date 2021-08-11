@@ -11,7 +11,7 @@ class blogPost(models.Model):
     head1_content = models.CharField(max_length=50000,default="")
     head2 = models.CharField(max_length=500, default="")
     head2_content = models.CharField(max_length=50000,default="")
-    publish_date = models.DateField(default="")
+    publish_date = models.DateTimeField(default="")
     thumbnail= models.ImageField(upload_to='blog/images', default="")
 
     def __str__(self):

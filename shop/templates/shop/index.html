@@ -7,11 +7,6 @@
     margin-left: -4px;
 
   }
-
-  .container-2 {
-    margin-top: 60px;
-  }
-
   .carousel-indicators .active {
     background-color: blue;
   }
@@ -48,7 +43,7 @@
 
   .mr-4,
   .mx-4 {
-    margin-right: 2.5rem ;
+    margin-right: 2.5rem;
   }
 
   body .no-padding {
@@ -78,7 +73,7 @@
 {% load static %}
 {% block body %}
 
-<div class="container  container-2 ">
+<div class="container my-1">
   <!--Slideshow starts here -->
   {% for product ,range, n_slide in all_products %}
   <h5 class="">Flash Sale On {{product.0.product_catogory}} Recommended For You</h5>
@@ -104,11 +99,18 @@
             <div class="card align-items-center" style="width: 18rem;">
               <img src='/media/{{i.product_image}}' class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
-                <b>
-                  <p class="card-title">Price &#x20b9 <span id="pricepr{{i.id}}">{{i.product_price}}</span></p>
-                </b>
-                <p class="card-text">{{i.description}}</p>
+                <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name|slice:"0:25"}}</h5>
+             
+                 <b> <p class="card-title">Price &#x20b9 <span id="pricepr{{i.id}}">{{i.product_price}}</span></p></b>
+                <dl>
+                  <dt>Heighlights</dt>
+                  <dd>
+                    <li class="card-text">{{i.description|slice:"0:20"}}.. </li>
+                  </dd>
+                </dl>
+
+
+
                 <span id="divpr{{i.id}}" class="divpr">
                   <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
                 </span>

@@ -1,10 +1,12 @@
 from django import http
 from django.core.checks import messages
+from django.contrib import messages
 from django.db.models import query
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, response
-from .models import Contact, product, orders, orderUpdate,accaunt
+from .models import Contact, product, orders, orderUpdate, accaunt
 from math import ceil, trunc
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -56,9 +58,9 @@ def serch(request):
 
 # This is about page
 
-def login(request):
-    return render(request,'shop/index.html')
 
+# def login(request):
+#     return render(request, 'shop/index.html')
 
 
 def signup(request):
@@ -70,31 +72,67 @@ def signup(request):
     #     signup = accaunt(username=username,name=name,password=password,email=email)
     #     signup.save()
     # else:
-    #     return HttpResponse("Page not found ")    
+    #     return HttpResponse("Page not found ")
     # return render(request,'shop/signup.html')
-    
+
     if request.method == "POST":
         username = request.POST['username']
         fname = request.POST['fname']
         lname = request.POST['lname']
-        email = request.POST['email']
+        email = request.POST['signupemail']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
-        
-        
-        # creating the user 
-        
-        myuser = User.objects.create_user(username,email,pass1)
-        myuser.firist_name = fname
+
+    #    checking the usr Creandentials
+        if len(username) > 10:
+            messages.error(
+                request, " Your user name must be under 10 characters")
+            return redirect('Homepage')
+
+        if not username.isalnum():
+            messages.error(
+                request, " User name should only contain letters and numbers")
+            return redirect('Homepage')
+        if (pass1 != pass2):
+            messages.error(request, " Passwords do not match")
+            return redirect('Homepage')
+
+      # creating the user
+
+        myuser = User.objects.create_user(username, email, pass1)
+        myuser.first_name = fname
         myuser.last_name = lname
         myuser.save()
-        messages.success(request,"your accaunt has been created You good to go.")
-        
-        
-        
-        return render(request,'shop/signup.html')
+        messages.success(
+            request, " Your Awsome Cart accaunt has been successfully created")
+        return redirect('Homepage')
     else:
-        return HttpResponse("error  while parsing your crendentials")
+        return render(request, 'shop/404.html')
+
+
+def handlelogin(request):
+    if request.method == "POST":
+        loginusername = request.POST['loginusername']
+        loginpassword = request.POST['loginpassword']
+
+        user = authenticate(username=loginusername, password=loginpassword)
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Successfully Logged In")
+            return redirect('Homepage')
+        else:
+            messages.error(request, "Invalid credentials Please try again")
+            return redirect('Homepage')
+
+    else:
+        return render(request, 'shop/404.html')
+
+
+def handlelogout(request):
+    logout(request)
+    messages.success(request, "Successfully logged out")
+    return redirect('Homepage')
+
 
 def about(request):
     return render(request, "shop/about.html")
@@ -118,11 +156,11 @@ def contact(request):
 def tracker(request):
     if request.method == "POST":
         order_id = request.POST.get('order_id', '')
-        email = request.POST.get('email', '')
+        trackeremail = request.POST.get('trackeremail', '')
         # print(f" order id {order_id}  email is {email}")
         # return HttpResponse(f" order id {order_id}  email is {email}")
         try:
-            order = orders.objects.filter(order_id=order_id, email=email)
+            order = orders.objects.filter(order_id=order_id, email=trackeremail)
             if len(order) > 0:
                 update = orderUpdate.objects.filter(order_id=order_id)
                 updates = []

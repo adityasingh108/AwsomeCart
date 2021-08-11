@@ -7,8 +7,6 @@ def index(request):
     return render(request, 'blog/index.html' ,{'post':post})
 
 def blogpost(request ,id):
-    print(id)
     post = blogPost.objects.filter(post_id=id)[0]
-    print(post) 
     return render(request, 'blog/blogpost.html' ,{'post':post})
 

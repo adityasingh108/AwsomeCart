@@ -63,7 +63,21 @@
     <div class="col-md-8 ">
       <h5 class="my-4">{{product.product_name}}</h5>
       <h5 class="card-text">Price &#x20b9 {{product.product_price}}</h5>
-      <p>{{product.description}}</p>
+      <dl>
+        <dt>Product description</dt>
+        <dt>Storage</dt>
+        <dd>
+          <li>
+              {{product.description}}
+          </li>
+          <dt>display</dt>
+          <dd><li>
+            {{product.description|slice:'0:12'}}
+          </li></dd>
+        </dd>
+      </dl>
+        
+      
     </div>
     <div >
       <a href='/shop/checkout'><button class=' btn btn-primary btn-2 mx-2' id='checkout'>Buy now</button></a>
