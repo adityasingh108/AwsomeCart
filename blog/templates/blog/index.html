@@ -23,11 +23,11 @@
                   </strong>
                   <h6  class="text-primary">{{item.head0}}</h6>
                   <div class="mb-1 ">{{item.publish_date}}</div>
-                  <p class="card-text mb-auto">{{item.head0_content}}</p>
+                  <p class="card-text mb-auto">{{item.head0_content|slice:"20"}}...</p>
                   <a href="/blog/blogpost/{{item.post_id}}" class="stretched-link">Continue reading</a>
               </div>
               <div class="col-auto d-none d-lg-block">
-                  <img src="/media/{{item.thumbnail}}" class="bd-placeholder-img thumb-img"width="333" height="151"  aria-label="Placeholder: Thumbnail">
+                  <img src="/media/{{item.thumbnail}}" class="bd-placeholder-img thumb-img "width="333" height="151" >
                   <title>Placeholder</title></img>
               </div>
           </div>
