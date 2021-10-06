@@ -7,12 +7,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, response
 from .models import Contact, product, orders, orderUpdate, accaunt
+from django.contrib.auth.decorators import login_required
 from math import ceil, trunc
 import json
 from django.views.decorators.csrf import csrf_exempt
 from paytm import Checksum
 
-MERCHANT_KEY = 'kbzk1DSbJiV_03p5'
+MERCHANT_KEY = 'zlhSB%nIlSgaXUUG'
 
 # Create your views here.
 
@@ -187,6 +188,7 @@ def product_views(request, myid):
 
 
 # chekout page
+# @login_required(login_url='login')
 def checkout(request):
     if request.method == "POST":
 
@@ -210,10 +212,10 @@ def checkout(request):
         update.save()
         thank = True
         id = order.order_id
-        return render(request, 'shop/checkout.html', {'thank': thank, 'id': id})
+        # return render(request, 'shop/checkout.html', {'thank': thank, 'id': id})
         param_dict = {
 
-            'MID': 'WorldP64425807474247',
+            'MID': 'fALCTU78586304196437',
             'ORDER_ID': str(order.order_id),
             'TXN_AMOUNT': str(amount),
             'CUST_ID': email,

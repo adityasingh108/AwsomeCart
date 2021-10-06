@@ -11,7 +11,7 @@ class product(models.Model):
     product_catogory = models.CharField(max_length=100, default="")
     product_brand = models.CharField(max_length=100, default="")
     product_sub_catogory = models.CharField(max_length=100, default="")
-    description = models.CharField(max_length=500, default="")
+    description = models.TextField(max_length=5000, default="")
     publish_date = models.DateField(default="")
     product_image = models.ImageField(upload_to='shop/images', default="")
 

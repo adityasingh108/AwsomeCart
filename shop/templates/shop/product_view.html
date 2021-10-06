@@ -65,14 +65,13 @@
       <h5 class="card-text">Price &#x20b9 {{product.product_price}}</h5>
       <dl>
         <dt>Product description</dt>
-        <dt>Storage</dt>
         <dd>
-          <li>
-              {{product.description}}
-          </li>
+          <ul>
+              {{product.description|safe}}
+          </ul>
           <dt>display</dt>
           <dd><li>
-            {{product.description|slice:'0:12'}}
+            {{product.description|safe|slice:'0:12'}}
           </li></dd>
         </dd>
       </dl>
@@ -87,5 +86,6 @@
       </span>
     </div>
   </div>
+  </div>>
 </body>
 {% endblock %}

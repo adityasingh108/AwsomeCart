@@ -286,16 +286,16 @@
           // $('#popcart').popover();
           updatePopover(cart);
           function updatePopover(cart) {
-            console.log('We are inside updatePopover');
+            // console.log('We are inside updatePopover');
             var popStr = "";
-            popStr = popStr + "<h6>Item in cart</h6><div class='mx-2 my-2'>";
+            // popStr = popStr + "<h6>Item in cart</h6><div class='mx-2 my-2'>";
             var i = 1;
             for (var item in cart) {
               popStr = popStr + "<b>" + i + "</b>. ";
               popStr = popStr
               i = i + 1;
             }
-            popStr = popStr + "</div> <a href= '/shop/checkout'><button class='btn btn-primary' id = 'checkout' > Checkout</button></a><button class='btn btn-primary mx-2' id = 'clearcart' onclick ='clearcart()' > ClearCart</button>";
+            // popStr = popStr + "</div> <a href= '/shop/checkout'><button class='btn btn-primary' id = 'checkout' > Checkout</button></a><button class='btn btn-primary mx-2' id = 'clearcart' onclick ='clearcart()' > ClearCart</button>";
             console.log(popStr);
             document.getElementById('popcart').setAttribute('data-content', popStr);
             // $('#popcart').popover();
@@ -319,7 +319,7 @@
               sum = sum + cart[item][0];
               localStorage.setItem('cart', JSON.stringify(cart));
               document.getElementById('cart').innerHTML = sum;
-              console.log(cart);
+              // console.log(cart);
               updatePopover(cart);
             }
           };

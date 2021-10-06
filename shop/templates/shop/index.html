@@ -105,7 +105,7 @@
                 <dl>
                   <dt>Heighlights</dt>
                   <dd>
-                    <li class="card-text">{{i.description|slice:"0:20"}}.. </li>
+                    <ul class="card-text">{{i.description|safe|slice:"0:20"}}.. </ul>
                   </dd>
                 </dl>
 
@@ -177,7 +177,7 @@
   $('#popcart').popover();
   updatePopover(cart);
   function updatePopover(cart) {
-    console.log('We are inside updatePopover');
+    // console.log('We are inside updatePopover');
     var popStr = "";
     popStr = popStr + "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
     var i = 1;
@@ -212,7 +212,7 @@
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     document.getElementById('cart').innerHTML = sum;
-    console.log(cart);
+    // console.log(cart);
     updatePopover(cart);
   }
 

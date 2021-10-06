@@ -41,7 +41,7 @@
 {% block body%}
 
 <body >
-
+   {% if user.is_authenticated %}
   <div class="container container-2">
     <main>
 
@@ -52,10 +52,7 @@
           </h4>
           <div>
             <ul class="list-group mb-3 box-shadow1" id="items">
-             
             </ul>
-
-
           </div>
 
         </div>
@@ -110,8 +107,7 @@
               </div>
 
               <div class="col-12">
-                <label for="address2" class="form-label text-primary">Address 2 <span
-                    class="text-muted">(Optional)</span></label>
+                <label for="address2" class="form-label text-primary">Address 2 </label>
                 <input type="text" class="form-control" id="address2" name="adress2" placeholder="Apartment" required>
               </div>
 
@@ -150,12 +146,16 @@
             </div>
 
             <hr class="my-4">
-
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Place Order</button>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Proceed to payment page</button>
           </form>
         </div>
       </div>
     </main>
+     {% else %}
+    <div class="container" style="margin-top: 40px;">
+      <h2 class="text text-primary">PLease login to checkout the item</h2>
+    </div>
+   {% endif %}
 
   </div>
   {% endblock %}
@@ -229,12 +229,13 @@
 
     document.getElementById('cart').innerHTML = sum;
     $('#item_json').val(JSON.stringify(cart));
-    {% if thank %}
-    alert("Thank for ordering us Your order id is {{id}}");
-    document.location = '/shop';
-    localStorage.clear()
-    {% endif %}
-    console.log(totalPrice)
+    // {% if thank %}
+    // alert("Thank for ordering us Your order id is {{id}}");
+    // {% comment %} document.location = '/shop'; {% endcomment %}
+    // localStorage.clear()
+    // {% endif %}
+    // {% comment %} console.log(totalPrice) {% endcomment %}
     $('#amount').val(totalPrice);
+    localStorage.clear()
   </script>
   {% endblock %}
